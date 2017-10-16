@@ -1,0 +1,470 @@
+<html>
+<head>
+<!--[if lt IE 9]>
+	<script type="text/javascript" src="https://apps.bdimg.com/libs/html5shiv/r29/html5.min.js"></script>
+<![endif]-->
+<!--[if lte IE 8]>
+	<script type="text/javascript" src="https://t1.daumcdn.net/brunch/service/user/3Hvv/file/kb-91MpdRJArW9wrrBrsyFpbgfg.js"></script>
+<![endif]-->
+<!--
+https://t1.daumcdn.net/brunch/service/user/3Hvv/file/kb-91MpdRJArW9wrrBrsyFpbgfg.js?excanvas.js
+https://t1.daumcdn.net/brunch/service/user/3Hvv/file/GaF7qTg8jegihfXjXFEu7iwWbR8.js?excanvas.min.js
+https://t1.daumcdn.net/brunch/service/user/3Hvv/file/CdXVwGazzmrUnRo_WmyRTwaqX2w.js?raphael.min.js=2.2.1
+-->
+</head>
+<body>
+<span>IID:</span>
+<p id="canvs_k"></p>
+<!--<canvas id="_bfg_" style="display:none"></canvas>-->
+<span>SID:</span>
+<p id="sound1_k"></p>
+<p id="sound2_k"></p>
+<span>TIMEZONE:</span>
+<p id="timezone_k"></p>
+<span>CPU:</span>
+<p id="cpucores_k"></p>
+<span>lang:</span>
+<p id="langlists_k"></p>
+<p id="langlists_md5_k"></p>
+<span>FID1:</span>
+<p id="font1list"></p>
+<p id="font1_k"></p>
+<span>FID2:</span>
+<p id="font2list"></p>
+<p id="font2_k"></p>
+<span>ERR:</span>
+<p id="errp"></p>
+<span>ERR_STACK:</span>
+<p id="errstack"></p>
+<br>
+<button type="button" onclick="worker()">worker</button>
+<br>
+
+<script>
+var CryptoJS=CryptoJS||function(e,m){var p={},j=p.lib={},l=function(){},f=j.Base={extend:function(a){l.prototype=this;var c=new l;a&&c.mixIn(a);c.hasOwnProperty("init")||(c.init=function(){c.$super.init.apply(this,arguments)});c.init.prototype=c;c.$super=this;return c},create:function(){var a=this.extend();a.init.apply(a,arguments);return a},init:function(){},mixIn:function(a){for(var c in a)a.hasOwnProperty(c)&&(this[c]=a[c]);a.hasOwnProperty("toString")&&(this.toString=a.toString)},clone:function(){return this.init.prototype.extend(this)}},
+n=j.WordArray=f.extend({init:function(a,c){a=this.words=a||[];this.sigBytes=c!=m?c:4*a.length},toString:function(a){return(a||h).stringify(this)},concat:function(a){var c=this.words,q=a.words,d=this.sigBytes;a=a.sigBytes;this.clamp();if(d%4)for(var b=0;b<a;b++)c[d+b>>>2]|=(q[b>>>2]>>>24-8*(b%4)&255)<<24-8*((d+b)%4);else if(65535<q.length)for(b=0;b<a;b+=4)c[d+b>>>2]=q[b>>>2];else c.push.apply(c,q);this.sigBytes+=a;return this},clamp:function(){var a=this.words,c=this.sigBytes;a[c>>>2]&=4294967295<<
+32-8*(c%4);a.length=e.ceil(c/4)},clone:function(){var a=f.clone.call(this);a.words=this.words.slice(0);return a},random:function(a){for(var c=[],b=0;b<a;b+=4)c.push(4294967296*e.random()|0);return new n.init(c,a)}}),b=p.enc={},h=b.Hex={stringify:function(a){var c=a.words;a=a.sigBytes;for(var b=[],d=0;d<a;d++){var f=c[d>>>2]>>>24-8*(d%4)&255;b.push((f>>>4).toString(16));b.push((f&15).toString(16))}return b.join("")},parse:function(a){for(var c=a.length,b=[],d=0;d<c;d+=2)b[d>>>3]|=parseInt(a.substr(d,
+2),16)<<24-4*(d%8);return new n.init(b,c/2)}},g=b.Latin1={stringify:function(a){var c=a.words;a=a.sigBytes;for(var b=[],d=0;d<a;d++)b.push(String.fromCharCode(c[d>>>2]>>>24-8*(d%4)&255));return b.join("")},parse:function(a){for(var c=a.length,b=[],d=0;d<c;d++)b[d>>>2]|=(a.charCodeAt(d)&255)<<24-8*(d%4);return new n.init(b,c)}},r=b.Utf8={stringify:function(a){try{return decodeURIComponent(escape(g.stringify(a)))}catch(c){throw Error("Malformed UTF-8 data");}},parse:function(a){return g.parse(unescape(encodeURIComponent(a)))}},
+k=j.BufferedBlockAlgorithm=f.extend({reset:function(){this._data=new n.init;this._nDataBytes=0},_append:function(a){"string"==typeof a&&(a=r.parse(a));this._data.concat(a);this._nDataBytes+=a.sigBytes},_process:function(a){var c=this._data,b=c.words,d=c.sigBytes,f=this.blockSize,h=d/(4*f),h=a?e.ceil(h):e.max((h|0)-this._minBufferSize,0);a=h*f;d=e.min(4*a,d);if(a){for(var g=0;g<a;g+=f)this._doProcessBlock(b,g);g=b.splice(0,a);c.sigBytes-=d}return new n.init(g,d)},clone:function(){var a=f.clone.call(this);
+a._data=this._data.clone();return a},_minBufferSize:0});j.Hasher=k.extend({cfg:f.extend(),init:function(a){this.cfg=this.cfg.extend(a);this.reset()},reset:function(){k.reset.call(this);this._doReset()},update:function(a){this._append(a);this._process();return this},finalize:function(a){a&&this._append(a);return this._doFinalize()},blockSize:16,_createHelper:function(a){return function(c,b){return(new a.init(b)).finalize(c)}},_createHmacHelper:function(a){return function(b,f){return(new s.HMAC.init(a,
+f)).finalize(b)}}});var s=p.algo={};return p}(Math);
+(function(){var e=CryptoJS,m=e.lib,p=m.WordArray,j=m.Hasher,l=[],m=e.algo.SHA1=j.extend({_doReset:function(){this._hash=new p.init([1732584193,4023233417,2562383102,271733878,3285377520])},_doProcessBlock:function(f,n){for(var b=this._hash.words,h=b[0],g=b[1],e=b[2],k=b[3],j=b[4],a=0;80>a;a++){if(16>a)l[a]=f[n+a]|0;else{var c=l[a-3]^l[a-8]^l[a-14]^l[a-16];l[a]=c<<1|c>>>31}c=(h<<5|h>>>27)+j+l[a];c=20>a?c+((g&e|~g&k)+1518500249):40>a?c+((g^e^k)+1859775393):60>a?c+((g&e|g&k|e&k)-1894007588):c+((g^e^
+k)-899497514);j=k;k=e;e=g<<30|g>>>2;g=h;h=c}b[0]=b[0]+h|0;b[1]=b[1]+g|0;b[2]=b[2]+e|0;b[3]=b[3]+k|0;b[4]=b[4]+j|0},_doFinalize:function(){var f=this._data,e=f.words,b=8*this._nDataBytes,h=8*f.sigBytes;e[h>>>5]|=128<<24-h%32;e[(h+64>>>9<<4)+14]=Math.floor(b/4294967296);e[(h+64>>>9<<4)+15]=b;f.sigBytes=4*e.length;this._process();return this._hash},clone:function(){var e=j.clone.call(this);e._hash=this._hash.clone();return e}});e.SHA1=j._createHelper(m);e.HmacSHA1=j._createHmacHelper(m)})();
+//https://github.com/blueimp/JavaScript-MD5
+!function(n){"use strict";function t(n,t){var r=(65535&n)+(65535&t),e=(n>>16)+(t>>16)+(r>>16);return e<<16|65535&r}function r(n,t){return n<<t|n>>>32-t}function e(n,e,o,u,c,f){return t(r(t(t(e,n),t(u,f)),c),o)}function o(n,t,r,o,u,c,f){return e(t&r|~t&o,n,t,u,c,f)}function u(n,t,r,o,u,c,f){return e(t&o|r&~o,n,t,u,c,f)}function c(n,t,r,o,u,c,f){return e(t^r^o,n,t,u,c,f)}function f(n,t,r,o,u,c,f){return e(r^(t|~o),n,t,u,c,f)}function i(n,r){n[r>>5]|=128<<r%32,n[(r+64>>>9<<4)+14]=r;var e,i,a,h,d,l=1732584193,g=-271733879,v=-1732584194,m=271733878;for(e=0;e<n.length;e+=16)i=l,a=g,h=v,d=m,l=o(l,g,v,m,n[e],7,-680876936),m=o(m,l,g,v,n[e+1],12,-389564586),v=o(v,m,l,g,n[e+2],17,606105819),g=o(g,v,m,l,n[e+3],22,-1044525330),l=o(l,g,v,m,n[e+4],7,-176418897),m=o(m,l,g,v,n[e+5],12,1200080426),v=o(v,m,l,g,n[e+6],17,-1473231341),g=o(g,v,m,l,n[e+7],22,-45705983),l=o(l,g,v,m,n[e+8],7,1770035416),m=o(m,l,g,v,n[e+9],12,-1958414417),v=o(v,m,l,g,n[e+10],17,-42063),g=o(g,v,m,l,n[e+11],22,-1990404162),l=o(l,g,v,m,n[e+12],7,1804603682),m=o(m,l,g,v,n[e+13],12,-40341101),v=o(v,m,l,g,n[e+14],17,-1502002290),g=o(g,v,m,l,n[e+15],22,1236535329),l=u(l,g,v,m,n[e+1],5,-165796510),m=u(m,l,g,v,n[e+6],9,-1069501632),v=u(v,m,l,g,n[e+11],14,643717713),g=u(g,v,m,l,n[e],20,-373897302),l=u(l,g,v,m,n[e+5],5,-701558691),m=u(m,l,g,v,n[e+10],9,38016083),v=u(v,m,l,g,n[e+15],14,-660478335),g=u(g,v,m,l,n[e+4],20,-405537848),l=u(l,g,v,m,n[e+9],5,568446438),m=u(m,l,g,v,n[e+14],9,-1019803690),v=u(v,m,l,g,n[e+3],14,-187363961),g=u(g,v,m,l,n[e+8],20,1163531501),l=u(l,g,v,m,n[e+13],5,-1444681467),m=u(m,l,g,v,n[e+2],9,-51403784),v=u(v,m,l,g,n[e+7],14,1735328473),g=u(g,v,m,l,n[e+12],20,-1926607734),l=c(l,g,v,m,n[e+5],4,-378558),m=c(m,l,g,v,n[e+8],11,-2022574463),v=c(v,m,l,g,n[e+11],16,1839030562),g=c(g,v,m,l,n[e+14],23,-35309556),l=c(l,g,v,m,n[e+1],4,-1530992060),m=c(m,l,g,v,n[e+4],11,1272893353),v=c(v,m,l,g,n[e+7],16,-155497632),g=c(g,v,m,l,n[e+10],23,-1094730640),l=c(l,g,v,m,n[e+13],4,681279174),m=c(m,l,g,v,n[e],11,-358537222),v=c(v,m,l,g,n[e+3],16,-722521979),g=c(g,v,m,l,n[e+6],23,76029189),l=c(l,g,v,m,n[e+9],4,-640364487),m=c(m,l,g,v,n[e+12],11,-421815835),v=c(v,m,l,g,n[e+15],16,530742520),g=c(g,v,m,l,n[e+2],23,-995338651),l=f(l,g,v,m,n[e],6,-198630844),m=f(m,l,g,v,n[e+7],10,1126891415),v=f(v,m,l,g,n[e+14],15,-1416354905),g=f(g,v,m,l,n[e+5],21,-57434055),l=f(l,g,v,m,n[e+12],6,1700485571),m=f(m,l,g,v,n[e+3],10,-1894986606),v=f(v,m,l,g,n[e+10],15,-1051523),g=f(g,v,m,l,n[e+1],21,-2054922799),l=f(l,g,v,m,n[e+8],6,1873313359),m=f(m,l,g,v,n[e+15],10,-30611744),v=f(v,m,l,g,n[e+6],15,-1560198380),g=f(g,v,m,l,n[e+13],21,1309151649),l=f(l,g,v,m,n[e+4],6,-145523070),m=f(m,l,g,v,n[e+11],10,-1120210379),v=f(v,m,l,g,n[e+2],15,718787259),g=f(g,v,m,l,n[e+9],21,-343485551),l=t(l,i),g=t(g,a),v=t(v,h),m=t(m,d);return[l,g,v,m]}function a(n){var t,r="",e=32*n.length;for(t=0;t<e;t+=8)r+=String.fromCharCode(n[t>>5]>>>t%32&255);return r}function h(n){var t,r=[];for(r[(n.length>>2)-1]=void 0,t=0;t<r.length;t+=1)r[t]=0;var e=8*n.length;for(t=0;t<e;t+=8)r[t>>5]|=(255&n.charCodeAt(t/8))<<t%32;return r}function d(n){return a(i(h(n),8*n.length))}function l(n,t){var r,e,o=h(n),u=[],c=[];for(u[15]=c[15]=void 0,o.length>16&&(o=i(o,8*n.length)),r=0;r<16;r+=1)u[r]=909522486^o[r],c[r]=1549556828^o[r];return e=i(u.concat(h(t)),512+8*t.length),a(i(c.concat(e),640))}function g(n){var t,r,e="0123456789abcdef",o="";for(r=0;r<n.length;r+=1)t=n.charCodeAt(r),o+=e.charAt(t>>>4&15)+e.charAt(15&t);return o}function v(n){return unescape(encodeURIComponent(n))}function m(n){return d(v(n))}function p(n){return g(m(n))}function s(n,t){return l(v(n),v(t))}function C(n,t){return g(s(n,t))}function A(n,t,r){return t?r?s(t,n):C(t,n):r?m(n):p(n)}"function"==typeof define&&define.amd?define(function(){return A}):"object"==typeof module&&module.exports?module.exports=A:n.md5=A}(this);
+function bfgf(){
+	var canvaso=document.createElement("canvas");
+	canvaso.id="_bfg_";
+	canvaso.style.display="none";
+	document.body.appendChild(canvaso);
+	//document.write('<canvas id="_bfg_" style="display:none"></canvas>');
+	var c=document.getElementById("_bfg_");
+	try{
+		c=G_vmlCanvasManager.initElement(c);
+	}catch(e){}
+	c.width=150;
+	c.height=30;
+	var ctx=c.getContext("2d");
+	ctx.fillStyle="#fff";
+	ctx.fillRect(0,0,150,30);
+	var txt="BrFID$?*m<lQ] +0.1";
+	ctx.textBaseline="top";
+	ctx.font="14px 'Arial'";
+	ctx.textBaseline="alphabetic";
+	ctx.fillStyle="#ab6537";
+	ctx.fillRect(60,1,65,18);
+	ctx.fillStyle="#069";
+	ctx.fillText(txt,2,15);
+	ctx.fillStyle="rgba(0,97,183,0.66)";
+	ctx.fillText(txt,4,17);
+	var b64=c.toDataURL();
+	c.outerHTML="";
+	return md5(b64);
+}
+document.getElementById("canvs_k").innerHTML=bfgf();
+
+
+
+var es;
+try{
+	null[0]();
+}catch(e){
+	es=e.stack;
+}
+document.getElementById("errstack").innerHTML="["+es+"]";
+
+
+
+//document.write("Date().getTimezoneOffset():",Date().getTimezoneOffset(),"<br>\r\n")
+
+//document.write("screen.colorDepth:",screen.colorDepth,"<br>\r\n")
+//document.write("screen.width:",screen.width,"<br>\r\n")
+//document.write("screen.height:",screen.height,"<br>\r\n")
+document.write("screen:",(screen.width+"*"+screen.height+"*"+screen.colorDepth),"<br>\r\n")
+//document.write("screen:",JSON.stringify(screen,null,4),"<br>\r\n")
+
+document.write("navigator.userAgent:",navigator.userAgent,"<br>\r\n")
+document.write("navigator.language:",navigator.language,"<br>\r\n")
+//document.write("navigator.cpuClass:",navigator.cpuClass,"<br>\r\n")
+document.write("navigator.platform:",navigator.platform,"<br>\r\n")
+document.write("navigator.vendor:",navigator.vendor,"<br>\r\n")
+document.write("navigator.appCodeName:",navigator.appCodeName,"<br>\r\n")
+document.write("navigator.appName:",navigator.appName,"<br>\r\n")
+document.write("navigator.appVersion:",navigator.appVersion,"<br>\r\n")
+document.write("navigator.product:",navigator.product,"<br>\r\n")
+
+document.write("<br>\r\n")
+document.write("navigator.plugins.length:",navigator.plugins.length,"<br>\r\n")
+document.write("navigator.plugins.*.name:<br>\r\n")
+try{
+	for(i=0;i<navigator.plugins.length;i++)
+		document.write(navigator.plugins[i][0].enabledPlugin.name,"<br>\r\n")
+}catch(e){}
+//document.write("navigator.plugins:",JSON.stringify(navigator.plugins,null,4),"<br>")
+document.write("<br>\r\n")
+
+document.write("window.sessionStorage:",window.sessionStorage,"<br>\r\n")
+document.write("window.localStorage:",window.localStorage,"<br>\r\n")
+document.write("window.indexedDB:",window.indexedDB,"<br>\r\n")
+document.write("window.openDatabase:",window.openDatabase,"<br>\r\n")
+//document.write("window.doNotTrack:",window.doNotTrack,"<br>\r\n")
+
+	
+	
+//获取系统字体集
+var fontList = [
+	"Academy Engraved LET","American Typewriter","Andale Mono","Apple Casual","Apple Chancery","Apple Color Emoji","Apple Garamond","Apple Gothic","Apple LiSung","Apple SD Gothic Neo","Apple Symbols","AppleGothic","Arial","Arial Black","Arial Hebrew","Arial MT","Arial Narrow","Arial Rounded MT Bold","Arial Unicode MS","Avenir Black","Avenir Book","Avenir Heavy","Avenir Light","Avenir Medium","Avenir Next","Avenir Oblique","Avenir Roman","Bangla Sangam MN","Basemic","Basemic Symbol","Basemic Times","Baskerville","Batang","Beijing","BiauKai","Bitstream Charter","Bitstream Vera Sans Mono","Bodoni Ornaments","Book Antiqua","Bookman Old Style","Calibri","Cambria","Cambria Math","Century","Century Gothic","Century Schoolbook","Chalkboard","Chalkduster","Chicago","Cochin","Comic Sans","Comic Sans MS","Consolas","Cooper","Copperplate","Courier","Courier 10 Pitch","Courier New","DejaVu Sans","DejaVu Sans Mono","DejaVu Serif","Didot","Fang Song","Garamond","Geeza Pro","Geneva","Georgia","Gill Sans","Gnu Unifont","Gnu Unifont Mono","Gulim","Haettenschweiler","Hei","Heiti SC","Heiti TC","Helvetica","Helvetica Neue","Hiragino Kaku Gothic","Hiragino Mincho","Hoefler Text","Impact","Kai","KaiTi","LUCIDA GRANDE","LilyUPC","Lucida Bright","Lucida Calligraphy","Lucida Console","Lucida Fax","Lucida Handwriting","Lucida Sans","Lucida Sans Typewriter","Lucida Sans Unicode","MS Gothic","MS Outlook","MS PGothic","MS Reference Sans Serif","MS Sans Serif","MS Serif","MYRIAD","MYRIAD PRO","Malgun Gothic","Marlett","Microsoft JhengHei","Microsoft Sans Serif","Microsoft Tai Le","Microsoft Uighur","Microsoft YaHei","MingLiU","Monaco","Monotype Corsiva","NSimSun","Palatino","Palatino Linotype","Segoe Print","Segoe Script","Segoe UI","Segoe UI Light","Segoe UI Semibold","Segoe UI Symbol","SimHei","SimKai","SimSun","Symbol","Tahoma","Times","Times New Roman","Times New Roman PS","Trebuchet MS","Ubuntu","Verdana","Vijaya","Webdings","Wingdings","Yu Gothic","Yu Mincho"
+];
+var CanvasFontDetector = function() {
+    var baseFonts = ['monospace','sans-serif','serif'];
+	var testString = "a";
+    var testSize = '72px';
+    function fontFamily(fonts){
+        var result = [];
+        var arrayLength = fonts.length;
+        for (var i = 0; i < arrayLength; i++) {
+            result.push("'" + fonts[i] + "'");
+        }
+        result = result.join(", ");
+        return result;
+    }
+    function CanvasTester(testString, testSize){
+        var canvas = document.createElement("canvas");
+        var context = canvas.getContext("2d");
+        return function() {
+            context.font = testSize + " " + fontFamily(arguments);
+            var dim = context.measureText(testString);
+            return dim.width;
+        };
+    }
+    var test = new CanvasTester(testString, testSize);
+    var defaultWidth = {};
+    var defaultHeight = {};
+    for (var index in baseFonts) {
+        //get the default width for the three base fonts
+        var width = test(baseFonts[index]);
+        defaultWidth[baseFonts[index]] = width;
+    }
+    function detect(font) {
+        var detected = false;
+        for (var index = 0, l = baseFonts.length; index < l; index++) {
+            var width = test(font, baseFonts[index]);
+            var matched = (width != defaultWidth[baseFonts[index]]);
+            detected = detected || matched;
+        }
+        return detected;
+    }
+    this.detect = detect;
+};
+function getInstalledFonts_usingCanvas(){
+	var installedFonts = '';
+	var d2 = new CanvasFontDetector();
+	var index;
+	for (index = 0; index < fontList.length; ++index) {
+		var font = fontList[index];
+		if(d2.detect(font)){
+			installedFonts += fontList[index];
+			installedFonts += ';';
+		}
+	}
+	return installedFonts;
+}
+function getInstalledFonts_usingJS() {
+    var that = this;
+    var baseFonts = ["monospace", "sans-serif", "serif"];
+    var testString = "a";
+    var testSize = "72px";
+    var h = document.getElementsByTagName("body")[0];
+    var s = document.createElement("span");
+    s.style.position = "absolute";
+    s.style.left = "-9999px";
+    s.style.fontSize = testSize;
+    s.innerHTML = testString;
+    var defaultWidth = {};
+    var defaultHeight = {};
+    for (var index = 0, length = baseFonts.length; index < length; index++) {
+        s.style.fontFamily = baseFonts[index];
+        h.appendChild(s);
+        defaultWidth[baseFonts[index]] = s.offsetWidth; //width for the default font
+        defaultHeight[baseFonts[index]] = s.offsetHeight; //height for the defualt font
+        h.removeChild(s);
+    }
+    var detect = function (font) {
+        var detected = false;
+        for (var index = 0, l = baseFonts.length; index < l; index++) {
+            s.style.fontFamily = font + "," + baseFonts[index];
+			// name of the font along with the base font for fallback.
+            h.appendChild(s);
+            var matched = (s.offsetWidth !== defaultWidth[baseFonts[index]] || s.offsetHeight !== defaultHeight[baseFonts[index]]);
+            h.removeChild(s);
+            detected = detected || matched;
+        }
+        return detected;
+    };
+    var available = [];
+    var jsInstalledFonts = '';
+    for (var i = 0, l = fontList.length; i < l; i++) {
+        if(detect(fontList[i])) {
+            jsInstalledFonts += fontList[i];
+            jsInstalledFonts += ';';       
+        }
+    }
+    return jsInstalledFonts;
+}
+var fontk=getInstalledFonts_usingCanvas();
+console.log(">>>>>>",fontk);
+document.getElementById("font1_k").innerHTML=md5(fontk);
+document.getElementById("font1list").innerHTML=fontk;
+fontk=getInstalledFonts_usingJS();
+console.log(">>>>>>",fontk);
+document.getElementById("font2_k").innerHTML=md5(fontk);
+document.getElementById("font2list").innerHTML=fontk;
+
+
+
+
+//声纹2 cc
+function audioFingerPrinting() {
+    var finished = false;
+    try{
+    	var audioCtx = new (window.AudioContext || window.webkitAudioContext),
+        oscillator = audioCtx.createOscillator(),
+        analyser = audioCtx.createAnalyser(),
+        gainNode = audioCtx.createGain(),
+        scriptProcessor = audioCtx.createScriptProcessor(4096,1,1);
+    	var destination = audioCtx.destination;
+    	return (audioCtx.sampleRate).toString() + '_' + destination.maxChannelCount + "_" + destination.numberOfInputs + '_' + destination.numberOfOutputs + '_' + destination.channelCount + '_' + destination.channelCountMode + '_' + destination.channelInterpretation;
+	//44100_2_1_0_2_explicit_speakers
+    }catch (e) {
+        return "not supported";
+    }
+}
+var audioid=audioFingerPrinting();
+console.log("audioid>>>>>> ["+audioid+"]");
+document.getElementById("sound2_k").innerHTML=audioid;
+
+
+
+
+//获取时区
+var timezonenow=-(new Date().getTimezoneOffset())/60;
+console.log("timezonenow>>>>>>",timezonenow);
+document.getElementById("timezone_k").innerHTML=timezonenow;
+
+	
+	
+	
+//取cpu核心数
+var cpucores=window.navigator.hardwareConcurrency;
+if(cpucores==undefined)cpucores=0;//firefox无法获取
+console.log("cpucores>>>>>>",cpucores);
+document.getElementById("cpucores_k").innerHTML=cpucores;
+	
+	
+	
+//获取系统支持的语言
+(function() {
+  var LanguageDetector, root, safeParseJSON;
+  root = typeof exports !== "undefined" && exports !== null ? exports : this;
+  safeParseJSON = function(s) {
+    try {
+      return JSON.parse(s);
+    } catch (error) {
+      return false;
+    }
+  };
+  LanguageDetector = (function() {
+    function LanguageDetector() {
+      this.names = safeParseJSON('[ "Latin", "Chinese", "Arabic", "Devanagari", "Cyrillic", "Bengali/Assamese", "Kana", "Gurmukhi", "Javanese", "Hangul", "Telugu", "Tamil", "Malayalam", "Burmese", "Thai", "Sundanese", "Kannada", "Gujarati", "Lao", "Odia", "Ge-ez", "Sinhala", "Armenian", "Khmer", "Greek", "Lontara", "Hebrew", "Tibetan", "Georgian", "Modern Yi", "Mongolian", "Tifinagh", "Syriac", "Thaana", "Inuktitut", "Cherokee" ]');
+      this.codes = safeParseJSON("[[76,97,116,105,110], [27721,23383], [1575,1604,1593,1585,1576,1610,1577], [2342,2375,2357,2344,2366,2327,2352,2368], [1050,1080,1088,1080,1083,1080,1094,1072], [2476,2494,2434,2482,2494,32,47,32,2437,2488,2478,2496,2479,2492,2494], [20206,21517], [2583,2625,2608,2606,2625,2582,2624], [43415,43438], [54620,44544], [3108,3142,3122,3137,3095,3137], [2980,2990,3007,2996,3021], [3374,3378,3375,3390,3379,3330], [4121,4156,4116,4154,4121,4140], [3652,3607,3618], [7070,7077,7060,7082,7059], [3221,3240,3277,3240,3233], [2711,2753,2716,2736,2750,2724,2752], [3749,3762,3751], [2825,2852,2893,2837,2867], [4877,4821,4829], [3523,3538,3458,3524,3517], [1344,1377,1397,1400,1409], [6017,6098,6040,6082,6042], [917,955,955,951,957,953,954,972], [6674,6682,6664,6673], [1488,1500,1508,1489,1497,1514], [3926,3964,3921,3851], [4325,4304,4320,4311,4323,4314,4312], [41352,41760], [6190,6179,6185,6189,6179,6191], [11612,11593,11580,11593,11599,11568,11606], [1808,1834,1825,1821,1808], [1931,1960,1928,1964,1920,1960], [5123,5316,5251,5198,5200,5222], [5091,5043,5033], [55295, 7077]]");
+      this.fontSize = 9;
+      this.fontFace = "Verdana";
+      this.extraHeigth = 15;
+      this.results = [];
+    }
+    LanguageDetector.prototype.begin = function() {
+      var c, code, h, height, i, j, k, l, len, len1, len2, len3, len4, len5, len6, len7, m, n, o, p, ref, ref1, ref2, ref3, round, s, w, width;
+      round = 0;
+      this.widths = [];
+      this.heights = [];
+      this.support = [];
+      this.test_div = document.createElement("div");
+      document.body.appendChild(this.test_div);
+      this.test_div.id = "WritingTest";
+      ref = this.codes;
+      for (i = 0, len = ref.length; i < len; i++) {
+        code = ref[i];
+        this.height = [];
+        this.width = [];
+        this.div = document.createElement("div");
+        this.test_div.appendChild(this.div);
+        round += 1;
+        this.div.id = round;
+        this.div.style.display = "inline-block";
+        for (j = 0, len1 = code.length; j < len1; j++) {
+          c = code[j];
+          this.div.innerHTML = ("<font face = '" + this.fontFace + "' size = ") + this.fontSize + ">&#" + c + "</font>";
+          this.height.push(document.getElementById(round).clientHeight);
+          this.width.push(document.getElementById(round).clientWidth);
+        }
+        this.div.innerHTML = "";
+        for (k = 0, len2 = code.length; k < len2; k++) {
+          c = code[k];
+          this.div.innerHTML += ("<font face = '" + this.fontFace + "' size = ") + this.fontSize + ">&#" + c + "</font>";
+        }
+        this.test_div.innerHTML += this.height + ";" + this.width + "<br>";
+        this.heights.push(this.height);
+        this.widths.push(this.width);
+      }
+      this.tw = this.widths.pop();
+      this.sw1 = this.tw[0];
+      this.sw2 = this.tw[1];
+      this.sh = this.heights.pop()[0];
+      ref1 = this.heights;
+      for (l = 0, len3 = ref1.length; l < len3; l++) {
+        height = ref1[l];
+        this.passed = 0;
+        for (m = 0, len4 = height.length; m < len4; m++) {
+          h = height[m];
+          if (h !== this.sh) {
+            this.support.push(true);
+            this.passed = 1;
+            break;
+          }
+        }
+        if (this.passed === 0) {
+          this.support.push(false);
+        }
+      }
+      this.writing_scripts_index = 0;
+      ref2 = this.widths;
+      for (n = 0, len5 = ref2.length; n < len5; n++) {
+        width = ref2[n];
+        for (o = 0, len6 = width.length; o < len6; o++) {
+          w = width[o];
+          if (this.support[this.writing_scripts_index] === false) {
+            if (w !== this.sw1 && w !== this.sw2) {
+              this.support[this.writing_scripts_index] = true;
+            }
+          }
+        }
+        this.writing_scripts_index += 1;
+      }
+      this.res = [];
+      this.writing_scripts_index = 0;
+      ref3 = this.support;
+      for (p = 0, len7 = ref3.length; p < len7; p++) {
+        s = ref3[p];
+        this.test_div.innerHTML += this.names[this.writing_scripts_index] + ": " + s + " <br>";
+        if (s === true) {
+          this.res.push(this.names[this.writing_scripts_index]);
+        }
+        this.writing_scripts_index += 1;
+      }
+      this.test_div.remove();
+      return this.res;
+    };
+    return LanguageDetector;
+  })();
+  root.get_writing_scripts = function() {
+    var detector;
+    detector = new LanguageDetector;
+    return this.res = detector.begin();
+  };
+}).call(this);
+var langlists=get_writing_scripts().sort().join(";");
+console.log("langlists>>>>>>",langlists);
+document.getElementById("langlists_k").innerHTML=langlists;
+document.getElementById("langlists_md5_k").innerHTML=md5(langlists);
+	
+	
+	
+	
+//pxi
+function bfgs1(f){
+	var context,pxi_oscillator,pxi_compressor,k;
+	try{
+		//console.log("OfflineAudioContext:",window.OfflineAudioContext);
+		//console.log("webkitOfflineAudioContext:",window.webkitOfflineAudioContext);
+		context=new(window.OfflineAudioContext||window.webkitOfflineAudioContext)(1,44100,44100);
+		//console.log(context);
+		if(!context){
+			//document.write("<br>[err] [bfgs1] -1 <br>");
+			document.getElementById("errp").innerHTML=("<br>[err] [bfgs1] -1 <br>\r\n");
+			return;
+		}
+		// Create oscillator
+		pxi_oscillator = context.createOscillator();
+		pxi_oscillator.type = "triangle";
+		pxi_oscillator.frequency.value = 1e4;
+		//console.log("1 pxi_oscillator:",pxi_oscillator);
+		// Create and configure compressor
+		pxi_compressor = context.createDynamicsCompressor();
+		if(pxi_compressor.threshold)(pxi_compressor.threshold.value = -50);
+		if(pxi_compressor.knee)(pxi_compressor.knee.value = 40);
+		if(pxi_compressor.ratio)(pxi_compressor.ratio.value = 12);
+		if(pxi_compressor.reduction)(pxi_compressor.reduction.value = -20);
+		if(pxi_compressor.attack)(pxi_compressor.attack.value = 0);
+		if(pxi_compressor.release)(pxi_compressor.release.value = .25);
+		//console.log("2 pxi_compressor:",pxi_compressor);
+		// Connect nodes
+		pxi_oscillator.connect(pxi_compressor);
+		//console.log("3 pxi_oscillator.connect()");
+		pxi_compressor.connect(context.destination);
+		//console.log("4 pxi_compressor.connect()");
+		// Start audio processing
+		pxi_oscillator.start(0);
+		//console.log("5 pxi_oscillator.start()");
+		context.oncomplete = function(evnt) {
+			//console.log("7 :",evnt);
+			var sha1 = CryptoJS.algo.SHA1.create();
+			for (var i = 0; i < evnt.renderedBuffer.length; i++) {
+				sha1.update(evnt.renderedBuffer.getChannelData(0)[i].toString());
+			}
+			k = sha1.finalize();
+			k = k.toString(CryptoJS.enc.Hex);
+			//console.log(k);//结果
+			pxi_compressor.disconnect();
+			f(k);
+		}
+		context.startRendering();
+		//console.log("6 context.startRendering()");
+	} catch (u) {
+		//document.write("<br>[err] [bfgs1] -2 ["+u+"] <br>");
+		document.getElementById("errp").innerHTML=("<br>[err] [bfgs1] -2 ["+u+"] <br>\r\n");
+		return;
+	}
+}
+bfgs1(function(r){
+	document.getElementById("sound1_k").innerHTML=r;
+});
+function worker(){
+	bfgs1(function(r){
+		document.getElementById("sound1_k").innerHTML=r;
+	});
+}
+
+
+</script>
+</body>
+</html>

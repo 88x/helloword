@@ -1,0 +1,11 @@
+<html>
+<script>
+var err;
+try{
+	null[0]();
+}catch(e){
+	err=e;
+}
+document.write(err.stack);
+</script>
+</html>

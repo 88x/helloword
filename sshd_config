@@ -1,0 +1,9 @@
+Port 53197
+#Subsystem sftp /usr/lib/openssh/sftp-server
+UsePrivilegeSeparation no
+PermitRootLogin yes
+PasswordAuthentication yes
+PermitEmptyPasswords no
+TCPKeepAlive yes
+ClientAliveInterval 300
+ClientAliveCountMax 10

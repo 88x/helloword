@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="referrer" content="no-referrer">
+<title></title>
+</head>
+<body>
+	<p>请在已登录 <a href="http://www.hostloc.com/" target=_blank>hostloc</a> 的浏览器中打开本页！</p>
+	<script>
+		var loop = 15;
+		var number = 0;
+		for (var i = 0; i < loop; i++) {
+			number = Math.ceil(Math.random() * 23676);
+			document.write('<iframe src="http://www.hostloc.com/home.php?mod=space&do=index&uid=' + number + '"></iframe>');
+		}
+	</script>
+</body>
+</html>
