@@ -127,6 +127,7 @@ echo "127.0.0.1 my.lotserver.cn " >> /etc/hosts
 echo "127.0.0.1 www.lotserver.cn " >> /etc/hosts
 apt-get update && apt-get install -y unzip wget
 wget --no-check-certificate -O appex.sh https://raw.githubusercontent.com/88x/serverSpeeder_Install/master/appex.sh && chmod +x appex.sh && bash appex.sh install
+rm -fr appex.sh
 #卸载：
 #wget --no-check-certificate -O appex.sh https://raw.githubusercontent.com/0oVicero0/serverSpeeder_Install/master/appex.sh && chmod +x appex.sh && bash appex.sh uninstall
 #命令：
