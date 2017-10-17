@@ -112,6 +112,7 @@ chkconfig vnstat on
 vnstat -u -i $NETCARD
 service vnstat stop
 chown vnstat:vnstat /var/lib/vnstat/.$NETCARD
+chown vnstat:vnstat /var/lib/vnstat/$NETCARD
 service vnstat start
 echo "#######################################################安装中文支持"
 apt-get -y install locales ttf-wqy-zenhei ttf-wqy-microhei xfonts-intl-chinese xfonts-wqy
