@@ -91,6 +91,13 @@ echo "#######################################################修改ssh设置"
 #sudo reboot
 #/etc/init.d/ssh restart
 #service ssh restart
+echo "#######################################################SSH设置"
+chmod 777 /etc/ssh/sshd_config
+cp /etc/ssh/sshd_config /etc/ssh/sshd_config.back
+wget down.99.tf/sshd_config -O /tmp/sshd_config.txt
+cat /tmp/sshd_config.txt >> /etc/ssh/sshd_config
+rm -fr /tmp/sshd_config.txt
+#service ssh restart
 echo "#######################################################磁盘优化"
 df -khal
 #for f in /sys/block/sd*/queue/scheduler; do echo "deadline" > $f; done
