@@ -5,5 +5,5 @@ PermitRootLogin yes
 PasswordAuthentication yes
 PermitEmptyPasswords no
 TCPKeepAlive yes
-ClientAliveInterval 300
-ClientAliveCountMax 10
+ClientAliveInterval 60
+ClientAliveCountMax 5
