@@ -9,7 +9,8 @@
 #sudo sed -i 's/^.*Port .*/Port 55555/g' /etc/ssh/sshd_config;
 #sudo reboot
 echo "#######################################################时区设置"
-cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+rm -fr /etc/localtime ; cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+source /etc/profile
 date -R
 echo "#######################################################让ipv4优先于ipv6"
 #cat /etc/gai.conf
