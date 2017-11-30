@@ -10,8 +10,10 @@
 #sudo reboot
 echo "#######################################################时区设置"
 rm -fr /etc/localtime ; cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-source /etc/profile
+#echo "export TZ='Asia/Shanghai'" >> /etc/profile
+#source /etc/profile
 date -R
+service cron restart
 echo "#######################################################让ipv4优先于ipv6"
 #cat /etc/gai.conf
 #echo "precedence ::ffff:0:0/96 100">>/etc/gai.conf
