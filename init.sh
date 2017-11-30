@@ -6,8 +6,9 @@ if [ ! -d "/swapfile" ]; then
 swapon /swapfile
 fi
 ######
-echo "export TZ='Asia/Shanghai'" >> /etc/profile
-source /etc/profile
+#echo "export TZ='Asia/Shanghai'" >> /etc/profile
+#source /etc/profile
+rm -fr /etc/localtime ; cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 export TZ='Asia/Shanghai'
 ulimit -SHn 1020000
 export LC_ALL="zh_CN.UTF-8"
