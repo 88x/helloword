@@ -79,7 +79,7 @@ echo "#######################################################系统内核优化"
 chmod 777 /etc/sysctl.conf
 cp /etc/sysctl.conf /etc/sysctl.conf.back
 wget down.99.tf/sysctl.conf -O /tmp/sysctl.conf.txt
-cat /tmp/sysctl.conf.txt >> /etc/sysctl.conf
+cat /tmp/sysctl.conf.txt > /etc/sysctl.conf
 rm -fr /tmp/sysctl.conf.txt
 sysctl -p
 echo "#######################################################修改ssh设置"
