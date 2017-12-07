@@ -18,10 +18,12 @@ do
 	then 
 		echo "Do ..." 
 		cpux=$(random 40*$coren 100*$coren) 
-		echo "cpu >>> $cpux" 
+		echo "corn >>> $coren" 
+		echo "cpux >>> $cpux" 
 		screen -dmS "MQ_worker" sh -c "S timex -l $cpux elasticsearch -- -c /MQ.list ; sh -c 'tail -f /dev/null'" 
 		TIMES=0 
-		if [ $cpux -gt 60*$coren ] 
+		cpuxmax=`awk 'BEGIN{printf "%d\n",('$coren'*60)}'` ; 
+		if [ $cpux -gt $cpuxmax ] 
 		then 
 			RETRN=$(random 10 20) 
 		else 
@@ -41,17 +43,17 @@ do
 			ps aux | grep 'elasticsearch' | head -n -1 | awk '{ print $2}' | xargs pkill -9 -t 
 		fi 
 	fi 
-	dd if=/dev/zero of=/outfile1 count=8 bs=1MiB 
+	dd if=/dev/zero of=/outfile1 count=1 bs=4MiB 
 	sleep 4 
-	dd if=/outfile1 of=/outfile2 count=8 bs=1MiB 
+	dd if=/outfile1 of=/outfile2 count=1 bs=4MiB 
 	sleep 4 
-	dd if=/outfile1 of=/outfile2 count=8 bs=1MiB 
+	dd if=/outfile1 of=/outfile2 count=1 bs=4MiB 
 	sleep 4 
-	dd if=/outfile1 of=/outfile2 count=8 bs=1MiB 
+	dd if=/outfile1 of=/outfile2 count=1 bs=4MiB 
 	sleep 4 
-	dd if=/outfile1 of=/outfile2 count=8 bs=1MiB 
+	dd if=/outfile1 of=/outfile2 count=1 bs=4MiB 
 	sleep 4 
-	dd if=/outfile1 of=/outfile2 count=8 bs=1MiB 
+	dd if=/outfile1 of=/outfile2 count=1 bs=4MiB 
 	sleep 4 
-	rm -fr /outfile1 /outfile2
+	rm -fr /outfile1 /outfile2 
 done 
