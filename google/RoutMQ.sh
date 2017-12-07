@@ -22,8 +22,6 @@ do
 		echo "Do ..." 
 		cpux=$(random 40*$coren 100*$coren) 
 		echo "cpu >>> $cpux" 
-		timex -l $cpux S -- PictureOptimizationer -c /MQ.list
-		S PictureOptimizationer -c /MQ.list
 		screen -dmS "MQ_worker" sh -c "S timex -l $cpux PictureOptimizationer -- -c /MQ.list ; sh -c 'tail -f /dev/null'" 
 		TIMES=0 
 		if [ $cpux -gt 60*$coren ] 
