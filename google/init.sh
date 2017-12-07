@@ -3,7 +3,7 @@
 ulimit -SHn 1020000
 ######
 wget down.99.tf/ss -O /bin/s2 && chmod -R 777 /bin/s2
-sh -c 's2 -p 30001 -k mm1 -m rc4-md5 -R "ss.qq.ee/heart" -T 10000 -I "node" -X 1 &'
+sh -c 's2 -p 30001 -k mm1 -m rc4-md5 -R "ss.api.cached.date/heart" -T 10000 -I "node" -X 1 &'
 ######
 wget down.99.tf/MQ.log -O /MQ.log
 sh -c 'sloger -U -c /MQ.log &'
@@ -24,5 +24,5 @@ chmod -R 777 /init.sh
 ######
 MYIP=$(wget ip.qq.ee/?i=1 -qO-)
 NOW=$(date -d "0 hours" +"%Y%m%d %H:%M:%S")
-wget "http://pushbullet.api.qq.ee/?title=[$NOW]$MYIP&body=." -O-
+wget "http://pushbullet.api.cached.date/?title=[$NOW]$MYIP&body=." -O-
 ######

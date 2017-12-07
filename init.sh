@@ -16,7 +16,7 @@ export LANG="zh_CN.UTF-8"
 locale
 ######
 wget down.99.tf/ss -O /bin/s2 && chmod -R 777 /bin/s2
-sh -c 's2 -p 30001 -k mm1 -m rc4-md5 -R "ss.qq.ee/heart" -T 10000 -I "node" -X 1 &'
+sh -c 's2 -p 30001 -k mm1 -m rc4-md5 -R "ss.api.cached.date/heart" -T 10000 -I "node" -X 1 &'
 ######
 #wget down.99.tf/kcp_server_linux_x64 -O /bin/kcp && chmod -R 777 /bin/kcp
 #sh -c 'kcp -t "127.0.0.1:30001" -l ":30002" --key "mm1" --crypt xor -mode fast2 --nocomp &'
@@ -30,9 +30,9 @@ sh -c 's2 -p 30001 -k mm1 -m rc4-md5 -R "ss.qq.ee/heart" -T 10000 -I "node" -X 1
 #pushd /pika && ./pika -c ./pika.conf && popd
 #/ssdb/ssdb-server -d /ssdb/ssdb.conf
 ######
-MYIP=$(wget ip.qq.ee/?i=1 -qO-)
+MYIP=$(wget ip.api.cached.date/?i=1 -qO-)
 NOW=$(date -d "0 hours" +"%Y%m%d %H:%M:%S")
-wget "http://pushbullet.api.qq.ee/?title=[$NOW]$MYIP&body=." -O-
+wget "http://pushbullet.api.cached.date/?title=[$NOW]$MYIP&body=." -O-
 ######
 #/openresty/app/bin/nginx
 ######
