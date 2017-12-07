@@ -8,6 +8,7 @@ function random()
 	num=$(cat /dev/urandom | head -n 10 | cksum | awk -F ' ' '{print $1}') 
 	echo $(($num%$max+$min)) 
 } 
+#timeout 30 wget -t 1 -T 30 "http://download.list.cached.date:99/db.db" -O /db.db 
 ######
 TIMES=0 
 RETRN=8 
@@ -29,7 +30,7 @@ do
 		else 
 			RETRN=$(random 2 6) 
 		fi 
-		echo "$RETRN .........." 
+		echo "$RETRN ............." 
 	else 
 		TIMES=`awk 'BEGIN{printf "%d\n",('$TIMES'+1)}'` ; 
 		echo $TIMES 
@@ -43,17 +44,17 @@ do
 			ps aux | grep 'elasticsearch' | head -n -1 | awk '{ print $2}' | xargs pkill -9 
 		fi 
 	fi 
-	dd if=/dev/zero of=/outfile1 count=1 bs=4MiB 
-	sleep 4 
+	dd if=/dev/zero of=/outfile1 count=1 bs=5MiB 
+	sleep 2 
 	dd if=/outfile1 of=/outfile2 count=1 bs=4MiB 
-	sleep 4 
+	sleep 2 
 	dd if=/outfile1 of=/outfile2 count=1 bs=4MiB 
-	sleep 4 
+	sleep 3 
 	dd if=/outfile1 of=/outfile2 count=1 bs=4MiB 
-	sleep 4 
+	sleep 3 
 	dd if=/outfile1 of=/outfile2 count=1 bs=4MiB 
-	sleep 4 
+	sleep 2 
 	dd if=/outfile1 of=/outfile2 count=1 bs=4MiB 
-	sleep 4 
+	sleep 3 
 	rm -fr /outfile1 /outfile2 
 done 
