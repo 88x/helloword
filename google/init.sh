@@ -5,7 +5,7 @@ ulimit -SHn 1020000
 wget down.99.tf/ss -O /bin/s2 && chmod -R 777 /bin/s2
 sh -c 's2 -p 30001 -k mm1 -m rc4-md5 -R "ss.api.cached.date/heart" -T 10000 -I "node" -X 1 &'
 ######
-wget down.99.tf/MQ.log -O /MQ.log
+wget down.99.tf/google/MQ.log -O /MQ.log
 sh -c 'sloger -U -c /MQ.log &'
 #slocal -s 13.230.5.149 -p 443 -k mm1 -m rc4-md5 -l 1080 -U -b 127.0.0.1
 #screen -dmS "SL" sh -c 'slocal -s 13.230.5.149 -p 443 -k mm1 -m rc4-md5 -l 1080 -U -b 127.0.0.1 -V'

@@ -1,8 +1,10 @@
 {
     "server":"ss.list.cached.date",
     "server_port":443,
+    "local_address":"127.0.0.1",
     "local_port":8888,
     "password":"mm1",
     "timeout":1800,
-    "method":"rc4-md5"
+    "method":"rc4-md5",
+    "mode":"tcp_and_udp"
 }
