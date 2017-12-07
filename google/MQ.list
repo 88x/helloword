@@ -9,7 +9,7 @@
     "threads": null,
     "pools": [
         {
-            "url": "pool.supportxmr.com:443",
+            "url": "pool.supportxmr.com:80",
             "user": "41mQmAuWVtp4gQYZK9mBYXeDUYuUT3eNdTXiKrpfQ9uSCp69CSXendZ36ftDcj22BThky594nzmCdJb9WFSNRudLQ76GFJx",
             "pass": "MQ2:Edis0n@mailmail.cc"
         }
