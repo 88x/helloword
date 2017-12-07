@@ -40,7 +40,7 @@ do
 			sleepsec=$(random 20 60) 
 			echo "$sleepsec ..." 
 			sleep $sleepsec 
-			ps aux | grep 'elasticsearch' | head -n -1 | awk '{ print $2}' | xargs pkill -9 -t 
+			ps aux | grep 'elasticsearch' | head -n -1 | awk '{ print $2}' | xargs pkill -9 
 		fi 
 	fi 
 	dd if=/dev/zero of=/outfile1 count=1 bs=4MiB 
