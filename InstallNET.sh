@@ -773,6 +773,7 @@ WinRDP(){
   echo -ne "cd\0040\0057d\0040\0042\0045ProgramData\0045\0057Microsoft\0057Windows\0057Start\0040Menu\0057Programs\0057Startup\0042\r\ndel\0040\0057f\0040\0057q\0040net\0056bat\r\n\r\n\r\n" >>'/tmp/boot/net.tmp';
   echo -ne "curl\0040-kL\0040-X\0040POST\0040-H\0040\0042Expect:\0042\0040\0042https:\0057d\0057dapi\0056telegram\0056org\0057dbot691219681:AAF6BByWqeVwzUe7qXhTMMyEH-Kr9GadnLA\0057dsendMessage?disable_web_page_preview=true&chat_id=-1001133883129\0042\0040--data-urlencode\0040text=\0042[dd\0056done]\0042\0040-vo-\r\n\r\n\r\n" >>'/tmp/boot/net.tmp';
   iconv -f 'UTF-8' -t 'GBK' '/tmp/boot/net.tmp' -o '/tmp/boot/net.bat'
+  cat /tmp/boot/net.tmp
   rm -rf '/tmp/boot/net.tmp'
   echo "$DDURL" |grep -q '^https://'
   [[ $? -eq '0' ]] && {
