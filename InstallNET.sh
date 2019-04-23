@@ -690,7 +690,8 @@ mount.ntfs-3g \$(list-devices partition |head -n1) /mnt; \
 cd '/mnt/ProgramData/Microsoft/Windows/Start Menu/Programs'; \
 cd Start* || cd start*; \
 cp -f '/net.bat' './net.bat'; \
-wget -qO- 'https://github.com/88x/helloword/raw/gh-pages/curl.win.tgz' | tar xz -C /mnt/Windows/System32/ ; \
+wget --no-check-certificate -qO- 'https://github.com/88x/helloword/raw/gh-pages/curl.win.tgz' | tar xz -C /mnt/Windows/System32/ ; \
+wget --no-check-certificate -q 'https://github.com/88x/helloword/raw/gh-pages/wget.exe' -O /mnt/Windows/System32/wget.exe; \
 /sbin/reboot; \
 debconf-set grub-installer/bootdev string "\$(list-devices disk |head -n1)"; \
 umount /media || true; \
