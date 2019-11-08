@@ -772,7 +772,7 @@ WinRDP(){
   [[ "$setRDP" == '1' ]] && [[ -n "$WinRemote" ]] && WinRDP
   echo -ne "ECHO\0040SELECT\0040VOLUME\0075\0045\0045SystemDrive\0045\0045\0040\0076\0040\0042\0045SystemDrive\0045\0134diskpart\0056extend\0042\r\nECHO\0040EXTEND\0040\0076\0076\0040\0042\0045SystemDrive\0045\0134diskpart\0056extend\0042\r\nSTART\0040/WAIT\0040DISKPART\0040\0057S\0040\0042\0045SystemDrive\0045\0134diskpart\0056extend\0042\r\nDEL\0040\0057f\0040\0057q\0040\0042\0045SystemDrive\0045\0134diskpart\0056extend\0042\r\n\r\n" >>'/tmp/boot/net.tmp';
   echo -ne "cd\0040\0057d\0040\0042\0045ProgramData\0045\0057Microsoft\0057Windows\0057Start\0040Menu\0057Programs\0057Startup\0042\r\ndel\0040\0057f\0040\0057q\0040net\0056bat\r\n\r\n\r\n" >>'/tmp/boot/net.tmp';
-  echo -ne "curl\0040-kL\0040-X\0040POST\0040-H\0040\0042Expect:\0042\0040\0042https:\0057d\0057dapi\0056telegram\0056org\0057dbot691219681:AAF6BByWqeVwzUe7qXhTMMyEH-Kr9GadnLA\0057dsendMessage?disable_web_page_preview=true&chat_id=-1001133883129\0042\0040--data-urlencode\0040text=\0042[dd\0056done]\0042\0040-vo-\r\n\r\n\r\n" >>'/tmp/boot/net.tmp';
+  echo -ne "curl\0040-kL\0040-X\0040POST\0040-H\0040\0042Expect:\0042\0040\0042https:\0057\0057api\0056telegram\0056org\0057bot772408645:AAETRrOAbRlsb2MQiM7uHBhJ3lOhUVD2Gkk\0057sendMessage?disable_web_page_preview=true&chat_id=-1001290542753\0042\0040--data-urlencode\0040text=\0042[dd\0056done]\0042\0040-kio-\r\n\r\n\r\n" >>'/tmp/boot/net.tmp';
   iconv -f 'UTF-8' -t 'GBK' '/tmp/boot/net.tmp' -o '/tmp/boot/net.bat'
   cat /tmp/boot/net.tmp
   rm -rf '/tmp/boot/net.tmp'
